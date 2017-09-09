@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Carro } from "../../model/Carro";
 import { Acessorio } from "../../model/Acessorio";
+import { CadastroPage } from "../cadastro/cadastro";
 
 @Component({
   selector: 'page-escolha',
@@ -38,6 +39,13 @@ export class EscolhaPage {
     } else {
       this._precoTotal -= acessorio.preco
     }
+  }
+
+  public avancaNoAgendamento(): void {
+    this.navCtrl.push(CadastroPage, {
+      carro: this.carro,
+      precoTotal: this._precoTotal
+    })
   }
 
 }

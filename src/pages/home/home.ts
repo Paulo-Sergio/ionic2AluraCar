@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { NavController, LoadingController, AlertController } from 'ionic-angular'
 import { Http } from '@angular/http'
-import { Carro } from "../../model/Carro"
+import { Carro } from "../../model/carro.model"
 import { EscolhaPage } from '../escolha/escolha'
 
 import 'rxjs/add/operator/map'

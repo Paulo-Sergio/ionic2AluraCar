@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Carro } from "../../model/Carro";
-import { Acessorio } from "../../model/Acessorio";
+import { Carro } from "../../model/carro.model";
+import { Acessorio } from "../../model/acessorio.model";
 import { CadastroPage } from "../cadastro/cadastro";
 
 @Component({
@@ -22,9 +22,9 @@ export class EscolhaPage {
     this.carro = this.navParams.get('carroSelecionado')
     this._precoTotal = this.carro.preco
     this.acessorios = [
-      { nome: 'Freio ABS', preco: 800 },
-      { nome: 'Ar-condicionado', preco: 1000 },
-      { nome: 'MP3 Player', preco: 500 }
+      new Acessorio('Freio ABS', 800),
+      new Acessorio('Ar-condicionado', 1000),
+      new Acessorio('MP3 Player', 500)
     ]
 
   }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { NavController } from 'ionic-angular'
+import { Component, OnInit } from '@angular/core'
+import { NavController, LoadingController, AlertController } from 'ionic-angular'
 import { Http } from '@angular/http'
 
 import 'rxjs/add/operator/map'
@@ -9,17 +9,44 @@ import 'rxjs/add/operator/toPromise'
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   public carros: Array<Object>
 
-  constructor(public navCtrl: NavController, private _http: Http) {
+  constructor(
+    public navCtrl: NavController,
+    private _http: Http,
+    private _loadCtrl: LoadingController,
+    private _alertCtrl: AlertController
+  ) { }
+
+  ngOnInit() {
+    let loader = this._loadCtrl.create({
+      content: 'Buscando novos carros. Aguarde...'
+    })
+
+    loader.present();
 
     this._http.get('https://aluracar.herokuapp.com/')
       .map(response => { return response.json() })
       .toPromise()
-      .then(carros => { this.carros = carros })
+      .then(carros => {
+        loader.dismiss();
+        this.carros = carros
+      })
+      .catch(err => {
+        console.log(err)
+        loader.dismiss()
+        this._alertCtrl.create({
+          title: 'Falha na conexão',
+          buttons: [{ text: 'Estou ciente!' }],
+          subTitle: 'Não foi possivel a lista de carros. Tenta mais tarde.'
+        }).present()
+      })
+  }
 
+  public seleciona(carro) {
+    console.log(carro.nome)
   }
 
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { NavController, LoadingController, AlertController } from 'ionic-angular'
 import { Http } from '@angular/http'
+import { Carro } from "../../model/Carro"
+import { EscolhaPage } from '../escolha/escolha'
 
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
@@ -11,7 +13,7 @@ import 'rxjs/add/operator/toPromise'
 })
 export class HomePage implements OnInit {
 
-  public carros: Array<Object>
+  public carros: Array<Carro>
 
   constructor(
     public navCtrl: NavController,
@@ -45,8 +47,10 @@ export class HomePage implements OnInit {
       })
   }
 
-  public seleciona(carro) {
-    console.log(carro.nome)
+  public seleciona(carro: Carro) {
+    this.navCtrl.push(EscolhaPage, {
+      carroSelecionado: carro
+    })
   }
 
 }

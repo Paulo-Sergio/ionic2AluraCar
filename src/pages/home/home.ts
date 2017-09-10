@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core'
 import { NavController, LoadingController, AlertController } from 'ionic-angular'
-import { Http } from '@angular/http'
 import { Carro } from "../../model/carro.model"
 import { EscolhaPage } from '../escolha/escolha'
+import { CarrosServiceProvider } from "../../providers/carros-service/carros-service";
 
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [CarrosServiceProvider]
 })
 export class HomePage implements OnInit {
 
@@ -17,7 +18,7 @@ export class HomePage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    private _http: Http,
+    private _carrosService: CarrosServiceProvider,
     private _loadCtrl: LoadingController,
     private _alertCtrl: AlertController
   ) { }
@@ -29,9 +30,7 @@ export class HomePage implements OnInit {
 
     loader.present();
 
-    this._http.get('https://aluracar.herokuapp.com/')
-      .map(response => { return response.json() })
-      .toPromise()
+    this._carrosService.carros()
       .then(carros => {
         loader.dismiss();
         this.carros = carros

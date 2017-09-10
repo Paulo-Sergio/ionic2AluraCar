@@ -1,15 +1,16 @@
 import { Component } from '@angular/core'
 import { NavController, NavParams, AlertController } from 'ionic-angular'
-import { Http } from '@angular/http'
 import { Carro } from "../../model/carro.model"
 import { HomePage } from "../home/home"
 
 import 'rxjs/add/operator/toPromise'
 import { Agendamento } from "../../model/agendamento.model";
+import { AgendamentoServiceProvider } from "../../providers/agendamento-service/agendamento-service"
 
 @Component({
   selector: 'page-cadastro',
   templateUrl: 'cadastro.html',
+  providers: [AgendamentoServiceProvider]
 })
 export class CadastroPage {
 
@@ -22,7 +23,7 @@ export class CadastroPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _http: Http,
+    private _service: AgendamentoServiceProvider,
     private _alertCtrl: AlertController
   ) {
 
@@ -43,11 +44,7 @@ export class CadastroPage {
       return
     }
 
-    let api = `https://aluracar.herokuapp.com/salvarpedido?carro=${this.agendamento.carro.nome}&preco=${this.agendamento.valor}&nome=${this.agendamento.nome}&endereco=${this.agendamento.endereco}&email=${this.agendamento.email}&dataAgendamento=${this.agendamento.data}`
-    console.log(api)
-
-    this._http.get(api)
-      .toPromise()
+    this._service.agenda(this.agendamento)
       .then(() => {
         this._alertCtrl.create({
           title: 'Aviso',

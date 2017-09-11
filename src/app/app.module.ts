@@ -10,6 +10,15 @@ import { HomePage } from '../pages/home/home';
 import { EscolhaPage } from '../pages/escolha/escolha';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 
+import { Storage } from '@ionic/storage';
+
+/*function provideStorage() {
+  return new Storage(['indexeddb'], {
+    name: 'aluracar',
+    storeName: 'agendamentos'
+  })
+}*/
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,6 +42,7 @@ import { CadastroPage } from '../pages/cadastro/cadastro';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
+    /*{ provide: Storage, useFactory: provideStorage }*/
   ]
 })
 export class AppModule { }
